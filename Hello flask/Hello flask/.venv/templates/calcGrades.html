@@ -3,68 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linear Regression Grades</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 20px;
-            color: #333;
-        }
-        h1 {
-            text-align: center;
-            color: #4CAF50;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: #fff;
-            padding: 20px;
-            margin: 20px auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-        }
-        label, input, button {
-            font-size: 1.2em;
-            margin: 10px 0;
-        }
-        input {
-            padding: 8px;
-            width: 100%;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        h2 {
-            text-align: center;
-            color: #555;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles2.css') }}">
+    <title>Temperatura vs Consumo</title>
 </head>
 <body>
-    <h1>Linear Regression: Calculate Grade Depends on Study Hours</h1>
-    <form method="post">
-        <label for="Hours">Study Hours:</label>
-        <input type="number" name="hours" required placeholder="Enter hours">
-        <button type="submit">Predict</button>
-    </form>
-    {% if result is not none %}
-        <h2>Estimated Grade: {{result}}</h2>
-    {% endif %}
-</body>
+    <h1>regresion lineal predice consumo basado en el tiempo</h1>
+    <div>
+        <h2>objetivo</h2>
+        <p>desarrollar un modelo de regresión lineal que predice el consumo de energía en función de la temperatura. El modelo se ha entrenado con un dataset de consumo y temperatura. A continuación, se presenta una interfaz donde se puede ingresar la temperatura actual y obtener una estimación del consumo de energía en función de ese valor.</p>
+    </div>
+    <div>
+        <form method="POST" action="/calc">
+            <label for="temperature">Temperatura:</label>
+            <input type="number" name="temperature" required placeholder="ingrese temperatura">
+            <button type="submit">ejecutar</button>
+        </form>
 
+        {% if result is not none %}
+            <h2>Consumo estimado: {{ result }}</h2>
+        {% endif %}
+
+        {% if plot_image is not none %}
+            <h2>Gráfica de Regresión Lineal</h2>
+            <img src="data:image/png;base64,{{ plot_image }}" alt="Gráfica de Regresión">
+
+        {% endif %}
+    </div>
+    
+</body>
 </html>
